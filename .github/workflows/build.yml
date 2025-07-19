@@ -19,6 +19,6 @@ jobs:
       run: |
         ./build.sh \
           --base quay.io/almalinuxorg/almalinux-bootc-rpi:10 \
-          --runtime ghcr.io \
-          --registry spiffe/bootc \
+          --registry ghcr.io \
+          --repo spiffe/bootc \
           --prefix almalinux-10-rpi
