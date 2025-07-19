@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     steps:
     - name: Build
-      uses: ./.github/actions/action
+      uses: ./.github/actions/shared
 
   build-and-push:
     name: Build images and push
@@ -24,5 +24,5 @@ jobs:
       packages: write
     steps:
     - name: Build and Push
-      uses: ./.github/actions/action
+      uses: ./.github/actions/shared
 
