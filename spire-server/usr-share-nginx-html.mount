@@ -1,0 +1,14 @@
+[Unit]
+DefaultDependencies=no
+Conflicts=umount.target
+Before=local-fs.target umount.target systemd-tmpfiles-setup.service
+After=var.mount
+
+[Mount]
+What=/etc/nginx/html
+Where=/usr/share/nginx/html
+Type=none
+Options=bind
+
+[Install]
+WantedBy=local-fs.target
