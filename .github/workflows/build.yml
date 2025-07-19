@@ -4,21 +4,24 @@ on:
     types: [synchronize, opened, reopened]
   release:
     types: [published]
+  workflow_dispatch: {}
 
 jobs:
   build:
     name: Build images
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-24.04-arm
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+    - name: Build
+      uses: ./.github/actions/action
 
-    - name: build rpi
-      shell: bash
-      run: |
-        ./build.sh \
-          --base quay.io/almalinuxorg/almalinux-bootc-rpi:10 \
-          --registry ghcr.io \
-          --repo spiffe/bootc \
-          --prefix almalinux-10-rpi
+  build-and-push:
+    name: Build images and push
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: write
+      packages: write
+    steps:
+    - name: Build and Push
+      uses: ./.github/actions/action
+
