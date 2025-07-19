@@ -1,6 +1,10 @@
 name: "Build and Push"
 
-inputs: {}
+inputs:
+  REGISTRY_USER:
+    required: false
+  REGISTRY_PASSWORD:
+    required: false
 
 runs:
   using: "composite"
@@ -18,8 +22,8 @@ runs:
     uses: docker/login-action@v3.3.0
     with:
       registry: ghcr.io
-      username: ${{ github.actor }}
-      password: ${{ secrets.GITHUB_TOKEN }}
+      username: ${{ input.REGISTRY_USER }}
+      password: ${{ input.REGISTRY_PASSWORD }}
   - name: push
     if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'release' }}
     shell: bash
