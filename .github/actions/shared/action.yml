@@ -16,10 +16,11 @@ runs:
         --base quay.io/almalinuxorg/almalinux-bootc-rpi:10 \
         --registry ghcr.io \
         --repo spiffe/bootc \
+        --runtime podman \
         --prefix almalinux-10-rpi
   - name: Log in to the Container registry
     if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'release' }}
-    uses: docker/login-action@v3.3.0
+    uses: redhat-actions/podman-login@v1
     with:
       registry: ghcr.io
       username: ${{ inputs.REGISTRY_USER }}
@@ -28,8 +29,8 @@ runs:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'release' }}
     shell: bash
     run: |
-      docker push ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-agent
-      docker push ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-ha-agent
-      docker push ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-server
-      docker push ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-ha-server
+      podman push ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-agent
+      podman push ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-ha-agent
+      podman push ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-server
+      podman push ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-ha-server
 
