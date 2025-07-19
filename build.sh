@@ -89,7 +89,7 @@ echo "Repo = $REPO"
 echo "Tag Prefix = $PREFIX"
 
 if [[ "$PREFIX" != "" ]]; then
-  PREFIX="-"
+  PREFIX="$PREFIX-"
 fi
 
 "$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-agent spire-agent/ --build-arg=BASE=$BASE
