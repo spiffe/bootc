@@ -1,0 +1,36 @@
+#!/bin/bash
+
+ADDR="$1"
+INTERFACE="${INTERFACE:-eth0}"
+SUBNET="${SUBNET:-24}"
+MTU="${MTU:-1500}"
+
+if [[ ! -v ADDR ]]; then
+  echo ADDR must be defined
+  exit -1
+fi
+
+if [[ ! -v GW ]]; then
+  GW=$(echo $ADDR | awk -F. '{printf "%s.%s.%s.1\n", $1, $2, $3}')
+fi
+
+cat > /etc/NetworkManager/system-connections/ovs-bridge-ovsbr0.nmconnection <<EOF
+[connection]
+id=eth0
+uuid=$(uuidgen)
+type=ethernet
+interface-name=eth0
+[ethernet]
+[ipv4]
+address1=${ADDR}/${SUBNET},${GW}
+method=manual
+[ipv6]
+addr-gen-mode=stable-privacy
+method=ignore
+may-fail=true
+never-default=true
+[802-3-ethernet]
+mtu=${MTU}
+EOF
+
+chmod 600 /etc/NetworkManager/system-connections/*

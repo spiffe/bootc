@@ -92,6 +92,8 @@ if [[ "$PREFIX" != "" ]]; then
   PREFIX="$PREFIX-"
 fi
 
+"$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-setup setup/ --build-arg=BASE=$BASE
+
 "$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-agent spire-agent/ --build-arg=BASE=$BASE
 
 "$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-ha-agent spire-ha-agent/ --build-arg=BASE="$REGISTRY/$REPO:$PREFIX"spire-agent

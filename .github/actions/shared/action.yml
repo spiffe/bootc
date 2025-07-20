@@ -29,6 +29,7 @@ runs:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'release' }}
     shell: bash
     run: |
+      podman push ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-setup
       podman push ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-agent
       podman push ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-ha-agent
       podman push ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-server
