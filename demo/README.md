@@ -36,7 +36,7 @@ vi /etc/spiffe/default-trust-domain.env
 Run:
 ```
 setup-static-ip <insert the ip address for this machine here (ex: 192.168.0.10)>
-update-rpi5-dtb
+setup-tpm
 reboot
 ```
 

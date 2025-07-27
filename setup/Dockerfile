@@ -2,7 +2,7 @@ ARG BASE=test
 
 FROM $BASE
 
-COPY update-rpi5-dtb /sbin
+COPY setup-tpm /sbin
 COPY setup-static-ip /sbin
 
 RUN \

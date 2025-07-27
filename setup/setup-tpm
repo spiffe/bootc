@@ -1,0 +1,21 @@
+#!/bin/bash
+
+ROOT=$(findmnt --target /sysroot -o source -run)
+BOOT=$(echo "$ROOT" | sed 's/[0-9]$/1/')
+
+if [ ! -b "$BOOT" ]; then
+	echo Could not find boot device
+	exit 1
+fi
+
+echo Boot device "$BOOT"
+
+mkdir -p /tmp/mnt
+
+set -e
+mount "$BOOT" /tmp/mnt
+cp config.txt config.txt.bak
+sed -i '/^dtparm=spi=.*/d;/^dtoverlay=tpm-slb9670$/d' config.txt
+echo 'dtparam=spi=on' >> config.txt
+echo 'dtoverlay=tpm-slb9670' >> config.txt
+umount /tmp/mnt
