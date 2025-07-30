@@ -16,6 +16,12 @@ Use a rpi-10 based image, not kitten.
 
 You can either use the console, or ssh in.
 
+## Become root
+
+```
+sudo su -
+```
+
 ## Switch to the spire-setup image
 
 This image provides some tools to help setup your system
@@ -25,7 +31,11 @@ Run:
 bootc switch ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-setup --apply
 ```
 
-After the reboot and relogin
+After the reboot, relogin and become root again
+
+```
+sudo su -
+```
 
 Consider editing /etc/spiffe/default-trust-domain.env and changing the trust domain from example.org to one for your system:
 ```

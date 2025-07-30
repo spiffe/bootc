@@ -14,6 +14,7 @@ mkdir -p /tmp/mnt
 
 set -e
 mount "$BOOT" /tmp/mnt
+cd /tmp/mnt
 cp config.txt config.txt.bak
 sed -i '/^dtparm=spi=.*/d;/^dtoverlay=tpm-slb9670$/d' config.txt
 echo 'dtparam=spi=on' >> config.txt
