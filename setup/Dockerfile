@@ -7,5 +7,7 @@ COPY setup-static-ip /sbin
 
 RUN \
   curl -L -o /etc/yum.repos.d/spire-examples.repo https://raw.githubusercontent.com/spiffe/spire-examples/refs/heads/main/examples/rpms/spire-examples.repo && \
-  dnf install -y spire-common spire-agent-nodeattestor-tpmdirect spire-server-attestor-tpm-verifier
+  dnf install -y spire-common spire-agent-nodeattestor-tpmdirect spire-server-attestor-tpm-verifier && \
+  chmod +x /sbin/setup-tpm && \
+  chmod +x /sbin/setup-static-ip
 
