@@ -19,4 +19,5 @@ cp config.txt config.txt.bak
 sed -i '/^dtparm=spi=.*/d;/^dtoverlay=tpm-slb9670$/d' config.txt
 echo 'dtparam=spi=on' >> config.txt
 echo 'dtoverlay=tpm-slb9670' >> config.txt
+cd -
 umount /tmp/mnt
