@@ -85,3 +85,26 @@ bootc switch ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-ha-server --apply
 ```
 bootc switch ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-ha-agent --apply
 ```
+
+
+### On the servers, login and switch to root
+
+Run:
+```
+chown almalinux /etc/spire/server/main/manifests/
+
+For each TPM, run:
+```
+touch /etc/spire/server/main/tpm-direct/hashes/<TPM-HASH-HERE>
+```
+
+### On your own management machine
+
+Edit the files under manifests and update ${SPIFFE_TRUST_DOMAIN} to be your actual trust domain, also
+edit in the correct TPM Hash over xxx in files *-node.yaml
+
+scp the files in manifests to the servers under /etc/spire/server/main/manifests/
+
+### FIXME bootstrapping instructions for cross trust here...
+
+Uncomment out the federated entries on the spire-ha-agent manifests and resync
