@@ -65,6 +65,23 @@ Take note of the value for your system. We will need it later.
 
 ### Provision TPM for server nodes
 
-If the system is going to be a spire-server and havent ever set up the tpm for this, setup a key for it as described here:
+If the system is going to be a spire-server and havent ever set up the tpm for this, setup a key for it as described here, storing the keys at /etc/spire/server-attestor-tpm/keys/a.pem and /etc/spire/server-attestor-tpm/keys/b.pem across all nodes:
 https://github.com/spiffe/spire-server-attestor-tpm?tab=readme-ov-file#setup
 
+### Setup /etc/hosts
+
+Add entries to /etc/hosts, replacing your trust domain
+```
+xxx.xxx.xxx.xxx spire-server-a.example.org
+xxx.xxx.xxx.xxx spire-server-b.example.org
+```
+
+### Switch server nodes to be servers:
+```
+bootc switch ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-ha-server --apply
+```
+
+### Switch agent nodes to be agents:
+```
+bootc switch ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-ha-agent --apply
+```
