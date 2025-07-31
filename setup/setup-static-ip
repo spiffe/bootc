@@ -14,12 +14,12 @@ if [[ ! -v GW ]]; then
   GW=$(echo $ADDR | awk -F. '{printf "%s.%s.%s.1\n", $1, $2, $3}')
 fi
 
-cat > /etc/NetworkManager/system-connections/ovs-bridge-ovsbr0.nmconnection <<EOF
+cat > /etc/NetworkManager/system-connections/end0.nmconnection <<EOF
 [connection]
-id=eth0
+id=end0
 uuid=$(uuidgen)
 type=ethernet
-interface-name=eth0
+interface-name=end0
 [ethernet]
 [ipv4]
 address1=${ADDR}/${SUBNET},${GW}
@@ -34,3 +34,6 @@ mtu=${MTU}
 EOF
 
 chmod 600 /etc/NetworkManager/system-connections/*
+
+[ -f /etc/NetworkManager/system-connections/cloud-init-end0.nmconnection ] && rm -f /etc/NetworkManager/system-connections/cloud-init-end0.nmconnection
+[ -f /etc/NetworkManager/system-connections/ovs-bridge-ovsbr0.nmconnection ] && rm -f /etc/NetworkManager/system-connections/ovs-bridge-ovsbr0.nmconnection
