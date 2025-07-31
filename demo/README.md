@@ -92,6 +92,7 @@ bootc switch ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-ha-agent --apply
 Run:
 ```
 chown almalinux /etc/spire/server/main/manifests/
+```
 
 For each TPM, run:
 ```
