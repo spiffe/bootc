@@ -2,7 +2,7 @@ ARG BASE=test
 
 FROM $BASE
 
-ARG STEP_VER=0.28.4
+ARG STEP_VER=0.28.7
 
 RUN \
   curl -L -o /etc/yum.repos.d/spire-examples.repo https://raw.githubusercontent.com/spiffe/spire-examples/refs/heads/main/examples/rpms/spire-examples.repo && \
