@@ -92,6 +92,8 @@ if [[ "$PREFIX" != "" ]]; then
   PREFIX="$PREFIX-"
 fi
 
+set -xe
+
 "$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-setup setup/ --build-arg=BASE=$BASE
 
 # Tag spire-agent is made of spire-agent and spiffe-step-ssh
