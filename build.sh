@@ -94,11 +94,18 @@ fi
 
 "$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-setup setup/ --build-arg=BASE=$BASE
 
-"$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-agent spire-agent/ --build-arg=BASE=$BASE
+# Tag spire-agent is made of spire-agent and spiffe-step-ssh
 
-"$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-ha-agent spire-ha-agent/ --build-arg=BASE="$REGISTRY/$REPO:$PREFIX"spire-agent
+"$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-agent-intermediate spire-agent/ --build-arg=BASE=$BASE
+"$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-agent spiffe-step-ssh/ --build-arg=BASE="$REGISTRY/$REPO:$PREFIX"spire-agent-intermediate
 
+# Tag spire-ha-agent is made of spire-agent, spire-ha-agent and spiffe-step-ssh
+"$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-ha-agent-intermediate spire-ha-agent/ --build-arg=BASE="$REGISTRY/$REPO:$PREFIX"spire-agent-intermediate
+"$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-ha-agent spiffe-step-ssh/ --build-arg=BASE="$REGISTRY/$REPO:$PREFIX"spire-ha-agent-intermediate
+
+# Tag spire-server is made of spire-agent, spiffe-step-ssh, and spire-server
 "$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-server spire-server/ --build-arg=BASE="$REGISTRY/$REPO:$PREFIX"spire-agent
 "$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-ha-server-intermediate spire-server/ --build-arg=BASE="$REGISTRY/$REPO:$PREFIX"spire-ha-agent
 
+# Tag spire-ha-server is made of spire-agent, spire-ha-agent, spiffe-step-ssh, spire-server, and spiffe-step-ssh-server
 "$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-ha-server spire-ha-server/ --build-arg=BASE="$REGISTRY/$REPO:$PREFIX"spire-ha-server-intermediate
