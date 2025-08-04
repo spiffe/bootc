@@ -1,5 +1,16 @@
 # DEMO
 
+## Description
+
+In this demo, we will setup the following hardware:
+* 3 physical machines using RPI5's.
+
+Two will be servers, and one will be an agent only
+
+The following services will be setup
+* 2 x SPIRE Servers in an HA configuration
+* 2 x SSH Host signing service
+
 ## Hardware
 
 See hardware list at https://github.com/spiffe/spire/issues/5206
