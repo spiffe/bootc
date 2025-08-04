@@ -56,6 +56,8 @@ setup-spiffe-step-ssh-server b
 systemctl enable spiffe-step-ssh-fetchca@b spiffe-step-ssh-server@b
 ```
 
+For any machine, run:
+```
 setup-static-ip <insert the ip address for this machine here (ex: 192.168.0.10)>
 setup-tpm
 reboot
