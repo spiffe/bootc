@@ -94,6 +94,8 @@ fi
 
 set -xe
 
+"$RUNTIME" pull docker.io/library/golang:1.24.1
+
 "$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-setup setup/ --build-arg=BASE=$BASE
 
 # Tag spire-agent is made of spire-agent and spiffe-step-ssh
