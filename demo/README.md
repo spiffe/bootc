@@ -43,8 +43,19 @@ vi /etc/spiffe/default-trust-domain.env
 ```
 
 ### Configure the system
+If a spire server 'a':
+```
+setup-spiffe-step-ssh-server a
+systemctl enable spiffe-step-ssh-fetchca@a spiffe-step-ssh-server@a
+```
+
+Or 'b', run:
 Run:
 ```
+setup-spiffe-step-ssh-server b
+systemctl enable spiffe-step-ssh-fetchca@b spiffe-step-ssh-server@b
+```
+
 setup-static-ip <insert the ip address for this machine here (ex: 192.168.0.10)>
 setup-tpm
 reboot
@@ -72,8 +83,8 @@ https://github.com/spiffe/spire-server-attestor-tpm?tab=readme-ov-file#setup
 
 Add entries to /etc/hosts, replacing your trust domain
 ```
-xxx.xxx.xxx.xxx spire-server-a.example.org
-xxx.xxx.xxx.xxx spire-server-b.example.org
+xxx.xxx.xxx.xxx spire-server-a.example.org spiffe-step-ssh-fetchca-a.example.org spiffe-step-ssh-a.example.org
+xxx.xxx.xxx.xxx spire-server-b.example.org spiffe-step-ssh-fetchca-b.example.org spiffe-step-ssh-b.example.org
 ```
 
 ### Switch server nodes to be servers:

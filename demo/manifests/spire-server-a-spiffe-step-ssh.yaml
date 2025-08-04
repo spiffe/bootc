@@ -1,0 +1,9 @@
+apiVersion: spire.spiffe.io/v1alpha1
+kind: ClusterStaticEntry
+metadata:
+  name: spire-server-a-spiffe-step-ssh
+spec:
+  parentID: spiffe://${SPIFFE_TRUST_DOMAIN}/node/spire-server-a.${SPIFFE_TRUST_DOMAIN}
+  spiffeID: spiffe://${SPIFFE_TRUST_DOMAIN}/sshd/spire-server-a.${SPIFFE_TRUST_DOMAIN}
+  selectors:
+  - systemd:id:spiffe-step-ssh@a.service
