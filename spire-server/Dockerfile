@@ -5,7 +5,7 @@ RUN \
   git clone https://github.com/kfox1111/spire-controller-manager && \
   cd spire-controller-manager && \
   git checkout static-expand-env && \
-  make bin/spire-agent && \
+  make bin/spire-controller-manager && \
   cp -a bin/spire-controller-manager /
 
 FROM $BASE
