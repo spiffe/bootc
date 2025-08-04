@@ -46,14 +46,14 @@ vi /etc/spiffe/default-trust-domain.env
 If a spire server 'a':
 ```
 setup-spiffe-step-ssh-server a
-systemctl enable spiffe-step-ssh-fetchca@a spiffe-step-ssh-server@a
+systemctl enable spiffe-step-ssh-fetchca@a spiffe-step-ssh-server@a spire-trust-sync@b
 ```
 
 Or 'b', run:
 Run:
 ```
 setup-spiffe-step-ssh-server b
-systemctl enable spiffe-step-ssh-fetchca@b spiffe-step-ssh-server@b
+systemctl enable spiffe-step-ssh-fetchca@b spiffe-step-ssh-server@b spire-trust-sync@a
 ```
 
 For any machine, run:
