@@ -3,7 +3,7 @@ ARG BASE=test
 FROM docker.io/library/golang:1.24.1 as build
 RUN \
   apt-get update && \
-  apt-get install patch curl && \
+  apt-get install -y patch curl && \
   git clone https://github.com/kfox1111/spire && \
   cd spire && \
   git checkout 6063take2 && \
