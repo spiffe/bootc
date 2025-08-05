@@ -20,4 +20,4 @@ RUN \
 COPY default.conf /etc/spire/agent/default.conf
 
 #FIXME
-COPY --from=build /spire-agent /usr/bin/spire-agent-test
+COPY --from=build /spire-agent /usr/bin/spire-agent
