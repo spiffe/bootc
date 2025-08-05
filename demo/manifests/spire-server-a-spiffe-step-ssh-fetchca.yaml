@@ -1,7 +1,7 @@
 apiVersion: spire.spiffe.io/v1alpha1
 kind: ClusterStaticEntry
 metadata:
-  name: spire-server-a-spiffe-step-ssh-server
+  name: spire-server-a-spiffe-step-ssh-server-fetchca
 spec:
   parentID: spiffe://${SPIFFE_TRUST_DOMAIN}/node/spire-server-a.${SPIFFE_TRUST_DOMAIN}
   spiffeID: spiffe://${SPIFFE_TRUST_DOMAIN}/spiffe-step-ssh-fetchca
