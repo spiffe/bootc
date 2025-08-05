@@ -54,13 +54,13 @@ vi /etc/spiffe/default-trust-domain.env
 ```
 
 ### Configure the system
-If a spire server 'a':
+If a SPIRE server `a`:
 ```
 setup-spiffe-step-ssh-server a
 systemctl enable spiffe-step-ssh-fetchca@a spiffe-step-ssh-server@a spire-trust-sync@b
 ```
 
-Or 'b', run:
+Or SPIRE server `b`, run:
 Run:
 ```
 setup-spiffe-step-ssh-server b
@@ -125,11 +125,28 @@ touch /etc/spire/server/main/tpm-direct/hashes/<TPM-HASH-HERE>
 
 ### On your own management machine
 
-Edit the files under manifests and update ${SPIFFE_TRUST_DOMAIN} to be your actual trust domain, also
-edit in the correct TPM Hash over xxx in files *-node.yaml
+Edit in the correct TPM Hash over xxx in files *-node.yaml
 
 scp the files in manifests to the servers under /etc/spire/server/main/manifests/
 
-### FIXME bootstrapping instructions for cross trust here...
+### Check on trust-sync
 
-Uncomment out the federated entries on the spire-ha-agent manifests and resync
+On server `a` make sure that spire-trust-sync@b is working by ensuring there is output from:
+```
+spire-server bundle list -socketPath /var/run/spire/server/sockets/main/private/api.sock
+```
+
+On server `b` make sure that spire-trust-sync@a is working by ensuring there is output from:
+```
+spire-server bundle list -socketPath /var/run/spire/server/sockets/main/private/api.sock
+```
+
+### Finish setting up the HA trust doamin
+
+Edit the manifests/*-spire-ha-agent.yaml and uncomment out the section:
+```
+  federatesWith:
+  - spire-ha
+```
+
+Resync manifests to both servers
