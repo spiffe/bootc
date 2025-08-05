@@ -28,4 +28,4 @@ COPY default.conf /etc/spire/server/default.conf
 
 #FIXME
 COPY --from=build /spire-controller-manager /usr/bin/spire-controller-manager
-RUN echo 'epandEnvStaticManifests=true' >> /etc/spire/controller-manager/default.conf
+RUN echo 'expandEnvStaticManifests: true' >> /etc/spire/controller-manager/default.conf
