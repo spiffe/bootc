@@ -1,6 +1,12 @@
 ARG BASE=test
 
 FROM docker.io/library/golang:1.24.1 as build
+RUN \
+  git clone https://github.com/kfox1111/spire && \
+  cd spire && \
+  git checkout 6063take2 && \
+  make bin/spire-agent && \
+  cp -a bin/spire-agent /
 
 FROM $BASE
 
@@ -12,3 +18,6 @@ RUN \
   ( if ! spire-ha-agent; then systemctl enable spire-agent@main; fi; true )
 
 COPY default.conf /etc/spire/agent/default.conf
+
+#FIXME
+COPY --from=build /spire-agentr /usr/bin/spire-agent
