@@ -15,7 +15,7 @@ COPY nginx-tmpfiles.conf /usr/lib/tmpfiles.d/nginx-tmpfiles.conf
 
 RUN \
   curl -L -o /etc/yum.repos.d/spire-examples.repo https://raw.githubusercontent.com/spiffe/spire-examples/refs/heads/main/examples/rpms/spire-examples.repo && \
-  dnf install -y sqlite spire-common spire-server spire-controller-manager spire-server-nodeattestor-tpmdirect spire-server-attestor-tpm-sign spire-server-attestor-tpm-signer-http nginx && \
+  dnf install -y sqlite spire-common spire-server spire-controller-manager spire-server-nodeattestor-tpmdirect spire-server-attestor-tpm-sign spire-server-attestor-tpm-signer-http spire-credentialcomposer-cel nginx && \
   systemctl enable spire-server.target spire.target && \
   systemctl enable spire-server@main spire-controller-manager@main spire-server-attestor-tpm-signer-unix nginx && \
   mkdir -p /etc/spire/server/main/manifests && \
