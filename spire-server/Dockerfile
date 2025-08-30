@@ -1,13 +1,5 @@
 ARG BASE=test
 
-FROM docker.io/library/golang:1.24.1 as build
-RUN \
-  git clone https://github.com/kfox1111/spire-controller-manager && \
-  cd spire-controller-manager && \
-  git checkout static-expand-env && \
-  make bin/spire-controller-manager && \
-  cp -a bin/spire-controller-manager /
-
 FROM $BASE
 
 COPY usr-share-nginx-html.mount /usr/lib/systemd/system/usr-share-nginx-html.mount
@@ -26,6 +18,4 @@ RUN \
 COPY nginx-spire.conf /etc/nginx/conf.d/spire.conf
 COPY default.conf /etc/spire/server/default.conf
 
-#FIXME
-COPY --from=build /spire-controller-manager /usr/bin/spire-controller-manager
 RUN echo 'expandEnvStaticManifests: true' >> /etc/spire/controller-manager/default.conf
