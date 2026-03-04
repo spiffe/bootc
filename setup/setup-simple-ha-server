@@ -7,7 +7,7 @@ if [[ ! -v INSTANCE ]]; then
   exit -1
 fi
 
-if [ "$INSTANCE" != "a" -o "$INSTANCE" != "b" ]; then
+if [ "$INSTANCE" != "a" -a "$INSTANCE" != "b" ]; then
   echo Instance must be either a or b
   exit -1
 fi
