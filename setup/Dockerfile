@@ -21,5 +21,5 @@ RUN \
   mkdir -p /etc/spire/server-attestor-tpm/keys && \
   chmod +x /sbin/setup-simple-ha-server && \
   chmod +x /sbin/setup-tpm && \
-  chmod +x /sbin/setup-static-ip
+  chmod +x /sbin/setup-static-ip && \
   chmod +x /sbin/setup-etc-hosts
