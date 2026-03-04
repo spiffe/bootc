@@ -1,0 +1,38 @@
+#!/bin/bash
+
+INSTANCE="$1"
+
+if [[ ! -v INSTANCE ]]; then
+  echo Instance must be defined
+  exit -1
+fi
+
+if [ "$INSTANCE" != "a" -o "$INSTANCE" != "b" ]; then
+  echo Instance must be either a or b
+  exit -1
+fi
+
+SELF=a
+OTHER=b
+if [ "$INSTANCE" != "a" ]; then
+  SELF=b
+  OTHER=a  
+fi
+
+get-tpm-pubhash
+if [ $? -eq 1 ]; then
+  echo Failed to get tpm pubhash. Please fix before rerunning.
+  exit -1
+fi
+
+tpm2_readpublic -c 0x81008006 -f pem -o "/etc/spire/server-attestor-tpm/keys/$SELF.pem" > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "The TPM is not inited. Please follow the instructions at https://github.com/spiffe/spire-server-attestor-tpm?tab=readme-ov-file#setup"
+  exit -1
+fi
+
+if [ ! -f "/etc/spiffe/step-ssh-server/$SELF/values.yaml" ]; then
+  setup-spiffe-step-ssh-server "$SELF"
+fi
+
+systemctl enable "spiffe-step-ssh-fetchca@$SELF" "spiffe-step-ssh-server@$SELF" "spire-trust-sync@$OTHER"

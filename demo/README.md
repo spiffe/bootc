@@ -53,24 +53,28 @@ Consider editing /etc/spiffe/default-trust-domain.env and changing the trust dom
 vi /etc/spiffe/default-trust-domain.env
 ```
 
+### Provision TPM for server nodes
+
+If the system is going to be a spire-server and havent ever set up the tpm for this, setup a key for it as described here:
+https://github.com/spiffe/spire-server-attestor-tpm?tab=readme-ov-file#setup
+
+Do server `a` and `b` before any other nodes.
+
 ### Configure the system
 If a SPIRE server `a`:
 ```
-setup-spiffe-step-ssh-server a
-systemctl enable spiffe-step-ssh-fetchca@a spiffe-step-ssh-server@a spire-trust-sync@b
+setup-simple-ha-server a
 ```
 
 Or SPIRE server `b`, run:
 Run:
 ```
-setup-spiffe-step-ssh-server b
-systemctl enable spiffe-step-ssh-fetchca@b spiffe-step-ssh-server@b spire-trust-sync@a
+setup-simple-ha-server b
 ```
 
 For any machine, run:
 ```
 setup-static-ip <insert the ip address for this machine here (ex: 192.168.0.10)>
-setup-tpm
 reboot
 ```
 
@@ -87,10 +91,7 @@ If everything is working, you should see something like:
 
 Take note of the value for your system. We will need it later.
 
-### Provision TPM for server nodes
-
-If the system is going to be a spire-server and havent ever set up the tpm for this, setup a key for it as described here, storing the keys at /etc/spire/server-attestor-tpm/keys/a.pem and /etc/spire/server-attestor-tpm/keys/b.pem across all nodes:
-https://github.com/spiffe/spire-server-attestor-tpm?tab=readme-ov-file#setup
+### After getting both servers provisioned, sync the keys from /etc/spire-server-attestor-tpm/keys/* to all nodes
 
 ### Setup /etc/hosts
 
