@@ -96,11 +96,14 @@ set -xe
 
 "$RUNTIME" pull docker.io/library/golang:1.24.1
 
-"$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-setup setup/ --build-arg=BASE=$BASE
+#Base image with tpm enabled
+"$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"tpm tpm/ --build-arg=BASE=$BASE
+
+"$RUNTIME" build --pull=never -t "$REGISTRY/$REPO:$PREFIX"spire-setup setup/ --build-arg=BASE="$REGISTRY/$REPO:$PREFIX"tpm
 
 # Tag spire-agent is made of spire-agent and spiffe-step-ssh
 
-"$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"spire-agent-intermediate spire-agent/ --build-arg=BASE=$BASE
+"$RUNTIME" build --pull-never -t "$REGISTRY/$REPO:$PREFIX"spire-agent-intermediate spire-agent/ --build-arg=BASE="$REGISTRY/$REPO:$PREFIX"tpm
 "$RUNTIME" build --pull=never -t "$REGISTRY/$REPO:$PREFIX"spire-agent spiffe-step-ssh/ --build-arg=BASE="$REGISTRY/$REPO:$PREFIX"spire-agent-intermediate
 
 # Tag spire-ha-agent is made of spire-agent, spire-ha-agent and spiffe-step-ssh

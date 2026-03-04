@@ -15,8 +15,6 @@ RUN \
   dnf install -y https://dl.smallstep.com/gh-release/cli/gh-release-header/v${STEP_VER}/step-cli-${STEP_VER}-1.$(uname -m).rpm && \
   dnf install -y spire-common spire-agent-nodeattestor-tpmdirect spire-server-attestor-tpm-verifier spiffe-step-ssh-server && \
   curl -L https://github.com/mikefarah/yq/releases/download/v${YQ_VER}/yq_linux_arm64 -o /usr/bin/yq && \
-  echo 'dtparam=spi=on' >> $(readlink -f /usr/lib/modules/*/)/rpi-config.txt && \
-  echo 'dtoverlay=tpm-slb9670' >> $(readlink -f /usr/lib/modules/*/)/rpi-config.txt && \
   chmod 755 /usr/bin/yq && \
   mkdir -p /etc/spire/server-attestor-tpm/keys && \
   chmod +x /sbin/setup-tpm && \
