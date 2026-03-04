@@ -75,31 +75,11 @@ setup-simple-ha-server b
 For any machine, run:
 ```
 setup-static-ip <insert the ip address for this machine here (ex: 192.168.0.10)>
+setup-etc-hosts <IP of server A> <IP of server B>
 reboot
 ```
 
-### Test the TPM and get its pubhash
-After the reboot, relogin and run:
-```
-get-tpm-pubhash
-```
-
-If everything is working, you should see something like:
-```
-5d3a79210d1fefc26de9c9480e544a1097e0d8cc0499dc89b6496aaba3b9e011
-```
-
-Take note of the value for your system. We will need it later.
-
 ### After getting both servers provisioned, sync the keys from /etc/spire-server-attestor-tpm/keys/* to all nodes
-
-### Setup /etc/hosts
-
-Add entries to /etc/hosts, replacing your trust domain
-```
-xxx.xxx.xxx.xxx spire-server-a.example.org spiffe-step-ssh-fetchca-a.example.org spiffe-step-ssh-a.example.org
-xxx.xxx.xxx.xxx spire-server-b.example.org spiffe-step-ssh-fetchca-b.example.org spiffe-step-ssh-b.example.org
-```
 
 ### Switch server nodes to be servers:
 ```
@@ -110,7 +90,6 @@ bootc switch ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-ha-server --apply
 ```
 bootc switch ghcr.io/spiffe/bootc:almalinux-10-rpi-spire-ha-agent --apply
 ```
-
 
 ### On the servers, login and switch to root
 

@@ -1,0 +1,35 @@
+#!/bin/bash
+IPA="$1"
+IPB="$2"
+
+if [[ -z "$IPA" || -z "$IPB" ]]; then
+  echo Usage: setup-etc-hosts IP-A IP-B
+  exit -1
+fi
+
+. /etc/spiffe/default-trust-domain.env
+TARGET_FILE="/etc/hosts"
+
+for IP in "$IPA" "$IPB"; do
+    if ! grep -q "^$IP" "$TARGET_FILE" 2>/dev/null; then
+        echo "Adding $IP to $TARGET_FILE"
+        echo "$IP" >> "$TARGET_FILE"
+    fi
+done
+
+for INSTANCE in A B; do
+    if [ "$INSTANCE" == "A" ]; then
+        CURRENT_IP="$IPA"
+    else
+        CURRENT_IP="$IPB"
+    fi
+
+    HOSTS=("spire-server-$INSTANCE.$SPIFFE_TRUST_DOMAIN" "spiffe-step-ssh-fetcha-$INSTANCE.$SPIFFE_TRUST_DOMAIN" "spiffe-step-ssh-$INSTANCE.$SPIFFE_TRUST_DOMAIN")
+
+    for HOST in "${HOSTS[@]}"; do
+        if ! grep "^$CURRENT_IP" "$TARGET_FILE" | grep -qpw "$HOST"; then
+            echo "Appending $HOST to $CURRENT_IP"
+            sed -i "/^$CURRENT_IP/ s/$/ $HOST/" "$TARGET_FILE"
+        fi
+    done
+done

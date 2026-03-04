@@ -9,6 +9,7 @@ ARG YQ_VER=4.47.1
 COPY setup-tpm /sbin
 COPY setup-static-ip /sbin
 COPY setup-simple-ha-server /sbin
+COPY setup-etc-hosts /sbin
 
 RUN \
   curl -L -o /etc/yum.repos.d/spire-examples.repo https://raw.githubusercontent.com/spiffe/spire-examples/refs/heads/main/examples/rpms/spire-examples.repo && \
@@ -21,4 +22,4 @@ RUN \
   chmod +x /sbin/setup-simple-ha-server && \
   chmod +x /sbin/setup-tpm && \
   chmod +x /sbin/setup-static-ip
-
+  chmod +x /sbin/setup-etc-hosts
