@@ -35,6 +35,7 @@ if [ $? -ne 0 ]; then
     tpm2_create -G rsa2048:rsassa:null -g sha256 -u key.pub -r key.priv -C 0x81000001
     set +e
   fi
+  tpm2_load -C 0x81000001 -u key.pub -r key.priv -c key.ctx
   tpm2_evictcontrol -C o -c key.ctx 0x81008006
   tpm2_readpublic -c 0x81008006 -f pem -o "/etc/spire/server-attestor-tpm/keys/$SELF.pem" > /dev/null 2>&1
 fi
