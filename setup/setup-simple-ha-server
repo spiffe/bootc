@@ -27,8 +27,13 @@ fi
 
 tpm2_readpublic -c 0x81008006 -f pem -o "/etc/spire/server-attestor-tpm/keys/$SELF.pem" > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-  echo "The TPM is not inited. Please follow the instructions at https://github.com/spiffe/spire-server-attestor-tpm?tab=readme-ov-file#setup"
-  exit -1
+  tpm2_create -G rsa2048:rsassa:null -g sha256 -u key.pub -r key.priv -C 0x81000001
+  if [ $? -ne 0 ]; then
+    set -e
+    tpm2_createprimary -C o -g sha256 -G rsa2048 -c primary.ctx
+    tpm2_evictcontrol -C o -c primary.ctx 0x81000001
+    tpm2_create -G rsa2048:rsassa:null -g sha256 -u key.pub -r key.priv -C 0x81000001
+  fi
 fi
 
 if [ ! -f "/etc/spiffe/step-ssh-server/$SELF/values.yaml" ]; then
