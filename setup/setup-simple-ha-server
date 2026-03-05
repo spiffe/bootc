@@ -27,7 +27,7 @@ fi
 
 tpm2_readpublic -c 0x81008006 -f pem -o "/etc/spire/server-attestor-tpm/keys/$SELF.pem" > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-  tpm2_create -G rsa2048:rsassa:null -g sha256 -u key.pub -r key.priv -C 0x81000001
+  tpm2_create -G rsa2048:rsassa:null -g sha256 -u key.pub -r key.priv -C 0x81000001 > /dev/null 2>&1
   if [ $? -ne 0 ]; then
     set -e
     tpm2_createprimary -C o -g sha256 -G rsa2048 -c primary.ctx
