@@ -38,3 +38,7 @@ fi
 systemctl enable "spiffe-step-ssh-fetchca@$SELF" "spiffe-step-ssh-server@$SELF" "spire-trust-sync@$OTHER"
 
 systemctl mask bootc-fetch-apply-updates.timer
+
+. /etc/spiffe/default-trust-domain.env
+
+hostnamectl --static set-hostname "spire-server-${INSTANCE}.${SPIFFE_TRUST_DOMAIN}"
