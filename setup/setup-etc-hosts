@@ -17,8 +17,8 @@ for IP in "$IPA" "$IPB"; do
     fi
 done
 
-for INSTANCE in A B; do
-    if [ "$INSTANCE" == "A" ]; then
+for INSTANCE in a b; do
+    if [ "$INSTANCE" == "a" ]; then
         CURRENT_IP="$IPA"
     else
         CURRENT_IP="$IPB"
@@ -27,7 +27,7 @@ for INSTANCE in A B; do
     HOSTS=("spire-server-$INSTANCE.$SPIFFE_TRUST_DOMAIN" "spiffe-step-ssh-fetcha-$INSTANCE.$SPIFFE_TRUST_DOMAIN" "spiffe-step-ssh-$INSTANCE.$SPIFFE_TRUST_DOMAIN")
 
     for HOST in "${HOSTS[@]}"; do
-        if ! grep "^$CURRENT_IP" "$TARGET_FILE" | grep -qpw "$HOST"; then
+        if ! grep "^$CURRENT_IP" "$TARGET_FILE" | grep -qPw "$HOST"; then
             echo "Appending $HOST to $CURRENT_IP"
             sed -i "/^$CURRENT_IP/ s/$/ $HOST/" "$TARGET_FILE"
         fi
