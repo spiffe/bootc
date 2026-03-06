@@ -23,6 +23,9 @@ Follow the instructions at https://github.com/AlmaLinux/bootc-images-rpi to setu
 
 Use a rpi-10 based image, not kitten.
 
+Consider adding your ssh key to the user-metadata file and possibly renaming the almalinux user after imaging the disk but before
+booting the first time.
+
 ## Login
 
 You can either use the console, or ssh in.
@@ -55,8 +58,8 @@ vi /etc/spiffe/default-trust-domain.env
 
 Do server `a` and `b` before any other nodes.
 
-### Configure the system
-If a SPIRE server `a`:
+### Configure the systems
+On SPIRE server `a`:
 ```
 setup-simple-ha-server a
 ```
@@ -71,10 +74,10 @@ For any machine, run:
 ```
 setup-static-ip <insert the ip address for this machine here (ex: 192.168.0.10)>
 setup-etc-hosts <IP of server A> <IP of server B>
-reboot
 ```
 
-### After getting both servers provisioned, sync the keys from /etc/spire-server-attestor-tpm/keys/* to all nodes
+### Setup bootstrap keys
+sync the keys from /etc/spire-server-attestor-tpm/keys/* to all nodes
 
 ### Switch server nodes to be servers:
 ```
@@ -100,9 +103,11 @@ touch /etc/spire/server/main/tpm-direct/hashes/<TPM-HASH-HERE>
 
 ### On your own management machine
 
+Start your manifests/ inventory with what is in `demo/manifests/`
+
 Edit in the correct TPM Hash over xxx in files *-node.yaml
 
-scp the files in manifests to the servers under /etc/spire/server/main/manifests/
+scp the files in manifests to both servers under `/etc/spire/server/main/manifests/`
 
 ### Check on trust-sync
 
@@ -126,11 +131,19 @@ Edit the manifests/*-spire-ha-agent.yaml and uncomment out the section:
 
 Resync manifests to both servers
 
-###
-Test that you got a ssh certificate from both spiffe-step-ssh@a.service and spiffe-step-ssh@b.service on both servers.
+### Check on ssh server signing
+run
+```
+journalctl -u spiffe-step-ssh@a.service
+```
+and
+```
+journalctl -u spiffe-step-ssh@b.service
+```
+On both servers and check that both services on both servers have issued ssh certificates
 
-###
-In your ~/.ssh/known_hosts file, add the following lines:
+### Setup your client to trust the ssh ca's
+In your client machines ~/.ssh/known_hosts file, add the following lines:
 
 ```
 @cert-authority *.example.org <ssh host ca key from install of server a>
@@ -138,3 +151,6 @@ In your ~/.ssh/known_hosts file, add the following lines:
 ```
 
 And if you have any previous entries for spire-server-a or spire-server-b, remove them now.
+
+sshing to either server now should not complain about unkonwn host even when not listed in known_hosts
+
