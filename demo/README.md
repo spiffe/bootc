@@ -13,7 +13,31 @@ The following services will be setup
 
 ## Hardware
 
-See hardware list at https://github.com/spiffe/spire/issues/5206
+We recommend using a case setup as described at:
+* https://github.com/kfox1111/rpi-bootc-bootloader/tree/main
+
+We recommend the RPI 5 over others because it has a RTC and m.2 support. Clock important for cert issuance. m.2 for better write durability.
+We recommend as much ram as possible. Not for SPIRE, but for future use as memory is not upgradable. But for a small home setup, minimal ram is
+really needed.
+
+You will need at least 2 instances for your servers. You may want a third for use as a client.
+
+Parts other then the case/button from before:
+* Raspberry Pi 5
+* RPI Power Supply
+* Raspberry Pi Active Cooler for Raspberry Pi 5 - https://www.amazon.com/dp/B0CLXZBR5P
+* Female Pin Header,2.54mm 2 Row 40 Pin Right Angle - https://www.amazon.com/dp/B07VK75P9L
+* GeeekPi TPM2.0 Module for Raspberry Pi - https://www.amazon.com/dp/B09G2BZQT5
+* RTCBattery Box - https://www.amazon.com/dp/B0CRKQ2MG1
+* CR2032 Battery
+
+Pick one:
+* Crucial P3 500GB PCIe Gen3 3D NAND NVMe M.2 SSD - https://www.amazon.com/dp/B0B25LQQPC
+* Patriot P300 M.2 PCIe Gen 3 x4 128GB - https://www.amazon.com/dp/B0822Y6N1C
+
+Ancillary components you may need if you don't have:
+* JSAUX Micro HDMI to HDMI Adapter - https://www.amazon.com/dp/B09LYPXPH6
+* USB to UART Debugger Module for Raspberry Pi 5 - https://www.amazon.com/dp/B0CZP8DZK8 - Sometimes useful
 
 ## Base image
 
