@@ -13,6 +13,8 @@ The following services will be setup
 
 ## Hardware
 
+![RPI5 Final Setup](images/final-pi5.jpg)
+
 We recommend using a case setup as described at:
 * https://github.com/kfox1111/rpi-bootc-bootloader/tree/main
 
@@ -21,6 +23,8 @@ We recommend as much ram as possible. Not for SPIRE, but for future use as memor
 really needed.
 
 You will need at least 2 instances for your servers. You may want a third for use as a client.
+
+Here are some parts that we know for sure will work as we have run them. Other parts will likely work but as we haven't tried, your mileage may vary.
 
 Parts other then the case/button from before:
 * Raspberry Pi 5
@@ -38,6 +42,23 @@ Pick one:
 Ancillary components you may need if you don't have:
 * JSAUX Micro HDMI to HDMI Adapter - https://www.amazon.com/dp/B09LYPXPH6
 * USB to UART Debugger Module for Raspberry Pi 5 - https://www.amazon.com/dp/B0CZP8DZK8 - Sometimes useful
+
+### Assembly notes
+If using the bootc button as described in the rpi-bootc-bootloader webpage, test to see if it fits snugly on the right angle adapter. If it does not, you may want to trim the right angle adapter to just fit the TPM by cutting it shorter.
+
+The right angle headers pins can be easily bent. Be careful when attaching to the TPM. Go slow until aligned. Push the closer pins into the TPM all the way carefully,
+then with the farther pins, push them into the TPM in harder. You should be able to get more in and it should cause the TPM to angle up a bit beyond the expected 90 degrees. This will ensure proper and reliable connectivity.
+
+When pressing the right angle header onto the RPI be very careful to only push it on just a little bit to prevent bending the PCI cable too much. It should be attached well, but not bottomed out.
+
+From the top:
+![TPM view 1](images/tpm1.jpg)
+
+From the side
+![TPM view 2](images/tpm2.jpg)
+
+Internal assembly
+![Inside](images/inside.jpg)
 
 ## Base image
 
