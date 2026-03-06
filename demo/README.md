@@ -53,11 +53,6 @@ Consider editing /etc/spiffe/default-trust-domain.env and changing the trust dom
 vi /etc/spiffe/default-trust-domain.env
 ```
 
-### Provision TPM for server nodes
-
-If the system is going to be a spire-server and havent ever set up the tpm for this, setup a key for it as described here:
-https://github.com/spiffe/spire-server-attestor-tpm?tab=readme-ov-file#setup
-
 Do server `a` and `b` before any other nodes.
 
 ### Configure the system

@@ -24,7 +24,7 @@ for INSTANCE in a b; do
         CURRENT_IP="$IPB"
     fi
 
-    HOSTS=("spire-server-$INSTANCE.$SPIFFE_TRUST_DOMAIN" "spiffe-step-ssh-fetcha-$INSTANCE.$SPIFFE_TRUST_DOMAIN" "spiffe-step-ssh-$INSTANCE.$SPIFFE_TRUST_DOMAIN")
+    HOSTS=("spire-server-$INSTANCE.$SPIFFE_TRUST_DOMAIN" "spiffe-step-ssh-fetchca-$INSTANCE.$SPIFFE_TRUST_DOMAIN" "spiffe-step-ssh-$INSTANCE.$SPIFFE_TRUST_DOMAIN")
 
     for HOST in "${HOSTS[@]}"; do
         if ! grep "^$CURRENT_IP" "$TARGET_FILE" | grep -qPw "$HOST"; then
