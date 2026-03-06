@@ -125,3 +125,16 @@ Edit the manifests/*-spire-ha-agent.yaml and uncomment out the section:
 ```
 
 Resync manifests to both servers
+
+###
+Test that you got a ssh certificate from both spiffe-step-ssh@a.service and spiffe-step-ssh@b.service on both servers.
+
+###
+In your ~/.ssh/known_hosts file, add the following lines:
+
+```
+@cert-authority *.example.org <ssh host ca key from install of server a>
+@cert-authority *.example.org <ssh host ca key from install of server b>
+```
+
+And if you have any previous entries for spire-server-a or spire-server-b, remove them now.
