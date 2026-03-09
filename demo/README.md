@@ -81,6 +81,19 @@ You can either use the console, or ssh in.
 sudo su -
 ```
 
+## Check on your clock
+
+```
+date
+```
+
+If it looks good, run
+```
+hwclock -w
+```
+
+If not, configure chrony and retry
+
 ## Switch to the spire-setup image
 
 This image provides some tools to help setup your system
