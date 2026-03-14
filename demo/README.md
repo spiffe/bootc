@@ -13,7 +13,52 @@ The following services will be setup
 
 ## Hardware
 
-See hardware list at https://github.com/spiffe/spire/issues/5206
+![RPI5 Final Setup](images/final-pi5.jpg)
+
+We recommend using a case setup as described at:
+* https://github.com/kfox1111/rpi-bootc-bootloader/tree/main
+
+We recommend the RPI 5 over others because it has a RTC and m.2 support. Clock important for cert issuance. m.2 for better write durability.
+We recommend as much ram as possible. Not for SPIRE, but for future use as memory is not upgradable. But for a small home setup, minimal ram is
+really needed.
+
+You will need at least 2 instances for your servers. You may want a third for use as a client.
+
+Here are some parts that we know for sure will work as we have run them. Other parts will likely work but as we haven't tried, your mileage may vary.
+
+Parts other then the case/button from before:
+* Raspberry Pi 5
+* RPI Power Supply
+* Raspberry Pi Active Cooler for Raspberry Pi 5 - https://www.amazon.com/dp/B0CLXZBR5P
+* Female Pin Header,2.54mm 2 Row 40 Pin Right Angle - https://www.amazon.com/dp/B07VK75P9L
+* GeeekPi TPM2.0 Module for Raspberry Pi - https://www.amazon.com/dp/B09G2BZQT5
+* RTCBattery Box - https://www.amazon.com/dp/B0CRKQ2MG1
+* CR2032 Battery
+
+Pick one:
+* Crucial P3 500GB PCIe Gen3 3D NAND NVMe M.2 SSD - https://www.amazon.com/dp/B0B25LQQPC
+* Patriot P300 M.2 PCIe Gen 3 x4 128GB - https://www.amazon.com/dp/B0822Y6N1C
+
+Ancillary components you may need if you don't have:
+* JSAUX Micro HDMI to HDMI Adapter - https://www.amazon.com/dp/B09LYPXPH6
+* USB to UART Debugger Module for Raspberry Pi 5 - https://www.amazon.com/dp/B0CZP8DZK8 - Sometimes useful
+
+### Assembly notes
+If using the bootc button as described in the rpi-bootc-bootloader webpage, test to see if it fits snugly on the right angle adapter. If it does not, you may want to trim the right angle adapter to just fit the TPM by cutting it shorter.
+
+The right angle headers pins can be easily bent. Be careful when attaching to the TPM. Go slow until aligned. Push the closer pins into the TPM all the way carefully,
+then with the farther pins, push them into the TPM in harder. You should be able to get more in and it should cause the TPM to angle up a bit beyond the expected 90 degrees. This will ensure proper and reliable connectivity.
+
+When pressing the right angle header onto the RPI be very careful to only push it on just a little bit to prevent bending the PCI cable too much. It should be attached well, but not bottomed out.
+
+From the top:
+![TPM view 1](images/tpm1.jpg)
+
+From the side
+![TPM view 2](images/tpm2.jpg)
+
+Internal assembly
+![Inside](images/inside.jpg)
 
 ## Base image
 
@@ -22,6 +67,9 @@ Read this whole section before proceeding.
 Follow the instructions at https://github.com/AlmaLinux/bootc-images-rpi to setup an initial bootable machine with OS.
 
 Use a rpi-10 based image, not kitten.
+
+Consider adding your ssh key to the user-metadata file and possibly renaming the almalinux user after imaging the disk but before
+booting the first time.
 
 ## Login
 
@@ -32,6 +80,19 @@ You can either use the console, or ssh in.
 ```
 sudo su -
 ```
+
+## Check on your clock
+
+```
+date
+```
+
+If it looks good, run
+```
+hwclock -w
+```
+
+If not, configure chrony and retry
 
 ## Switch to the spire-setup image
 
@@ -55,8 +116,8 @@ vi /etc/spiffe/default-trust-domain.env
 
 Do server `a` and `b` before any other nodes.
 
-### Configure the system
-If a SPIRE server `a`:
+### Configure the systems
+On SPIRE server `a`:
 ```
 setup-simple-ha-server a
 ```
@@ -71,10 +132,10 @@ For any machine, run:
 ```
 setup-static-ip <insert the ip address for this machine here (ex: 192.168.0.10)>
 setup-etc-hosts <IP of server A> <IP of server B>
-reboot
 ```
 
-### After getting both servers provisioned, sync the keys from /etc/spire-server-attestor-tpm/keys/* to all nodes
+### Setup bootstrap keys
+sync the keys from /etc/spire-server-attestor-tpm/keys/* to all nodes
 
 ### Switch server nodes to be servers:
 ```
@@ -100,9 +161,11 @@ touch /etc/spire/server/main/tpm-direct/hashes/<TPM-HASH-HERE>
 
 ### On your own management machine
 
+Start your manifests/ inventory with what is in `demo/manifests/`
+
 Edit in the correct TPM Hash over xxx in files *-node.yaml
 
-scp the files in manifests to the servers under /etc/spire/server/main/manifests/
+scp the files in manifests to both servers under `/etc/spire/server/main/manifests/`
 
 ### Check on trust-sync
 
@@ -125,3 +188,27 @@ Edit the manifests/*-spire-ha-agent.yaml and uncomment out the section:
 ```
 
 Resync manifests to both servers
+
+### Check on ssh server signing
+run
+```
+journalctl -u spiffe-step-ssh@a.service
+```
+and
+```
+journalctl -u spiffe-step-ssh@b.service
+```
+On both servers and check that both services on both servers have issued ssh certificates
+
+### Setup your client to trust the ssh ca's
+In your client machines ~/.ssh/known_hosts file, add the following lines:
+
+```
+@cert-authority *.example.org <ssh host ca key from install of server a>
+@cert-authority *.example.org <ssh host ca key from install of server b>
+```
+
+And if you have any previous entries for spire-server-a or spire-server-b, remove them now.
+
+sshing to either server now should not complain about unkonwn host even when not listed in known_hosts
+

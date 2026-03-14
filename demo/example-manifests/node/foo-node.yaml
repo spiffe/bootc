@@ -1,0 +1,9 @@
+apiVersion: spire.spiffe.io/v1alpha1
+kind: ClusterStaticEntry
+metadata:
+  name: foo-node
+spec:
+  parentID: spiffe://${SPIFFE_TRUST_DOMAIN}/spire/server
+  spiffeID: spiffe://${SPIFFE_TRUST_DOMAIN}/node/foo.${SPIFFE_TRUST_DOMAIN}
+  selectors:
+  - tpm:pub_hash:xxx
