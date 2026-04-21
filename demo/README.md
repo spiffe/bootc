@@ -3,9 +3,9 @@
 ## Description
 
 In this demo, we will setup the following hardware:
-* 3 physical machines using RPI5's.
+* 2 physical machines using RPI5's.
 
-Two will be servers, and one will be an agent only
+They both will be setup as servers
 
 The following services will be setup
 * 2 x SPIRE Servers in an HA configuration
