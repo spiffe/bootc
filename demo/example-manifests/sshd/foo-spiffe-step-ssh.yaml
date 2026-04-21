@@ -6,4 +6,4 @@ spec:
   parentID: spiffe://${SPIFFE_TRUST_DOMAIN}/node/foo.${SPIFFE_TRUST_DOMAIN}
   spiffeID: spiffe://${SPIFFE_TRUST_DOMAIN}/sshd/foo.${SPIFFE_TRUST_DOMAIN}
   selectors:
-  - systemd:id:spiffe-step-ssh@${INSTANCE}.service
+  - systemd:id:spiffe-step-ssh@${SUBINSTANCE}.service
