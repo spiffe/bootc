@@ -31,9 +31,13 @@ Parts other then the case/button from before:
 * RPI Power Supply
 * Raspberry Pi Active Cooler for Raspberry Pi 5 - https://www.amazon.com/dp/B0CLXZBR5P
 * Female Pin Header,2.54mm 2 Row 40 Pin Right Angle - https://www.amazon.com/dp/B07VK75P9L
-* GeeekPi TPM2.0 Module for Raspberry Pi - https://www.amazon.com/dp/B09G2BZQT5
 * RTCBattery Box - https://www.amazon.com/dp/B0CRKQ2MG1
 * CR2032 Battery
+* 8.5mm GPIO and PoE Pin Header Height Extender for RPi - https://www.amazon.com/dp/B0F1F84GKV
+* ANAVI TPM 2.0 for Raspberry Pi - https://www.crowdsupply.com/anavi-technology/anavi-tpm-2-0-for-raspberry-pi (Recommend the horizontal one to fit the recomended case)
+
+Previous alternate, no longer recommended:
+* GeeekPi TPM2.0 Module for Raspberry Pi - https://www.amazon.com/dp/B09G2BZQT5 - They sometimes ship TPM 1.2 only TPMS. Check immediately when obtaining one so you can send it back.
 
 Pick one:
 * Crucial P3 500GB PCIe Gen3 3D NAND NVMe M.2 SSD - https://www.amazon.com/dp/B0B25LQQPC
