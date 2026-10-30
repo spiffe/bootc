@@ -94,8 +94,6 @@ fi
 
 set -xe
 
-"$RUNTIME" pull docker.io/library/golang:1.24.1
-
 #Base image with tpm enabled
 "$RUNTIME" build -t "$REGISTRY/$REPO:$PREFIX"tpm tpm/ --build-arg=BASE=$BASE
 
